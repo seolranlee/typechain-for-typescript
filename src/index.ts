@@ -1,13 +1,30 @@
+// 블록체인의 기반: 블록들이 자신의 전(previous) 블록으로의 링크가 있다는 것.
+
 import * as CryptoJS from 'crypto-js';
 
 class Block {
+
+
+    static calculateBlockHash = (
+        index: number,
+        previousHash: string,
+        timestamp: number,
+        data: string
+    ): string => CryptoJS.SHA256(index + previousHash + timestamp + data).toString()
+
+    static validateStructure = (aBlock: Block): boolean => {
+        return typeof aBlock.index === "number" &&
+            typeof aBlock.hash === "string" &&
+            typeof aBlock.previousHash === "string" &&
+            typeof aBlock.timestamp === "number" &&
+            typeof aBlock.data === "string";
+    }
+
     public index: number;
     public hash: string;
     public previousHash: string;
     public data: string;
     public timestamp: number;
-
-    static calculateBlockHash = (index: number, previousHash: string, timestamp: number, data: string): string => CryptoJS.SHA256(index + previousHash + timestamp + data).toString()
 
     constructor(
         index: number,
@@ -43,5 +60,14 @@ const createNewBlock = (data: string): Block => {
     return newBlock;
 }
 
-console.log(createNewBlock("hello"), createNewBlock("bye bye"))
+const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean => {
+    if (!Block.validateStructure(candidateBlock)) {
+        return false;
+    } else if (previousBlock.index + 1 !== candidateBlock.index) {
+        return false;
+    } else if (previousBlock.hash !== candidateBlock.previousHash) {
+        return false;
+    }
+}
+
 export { };
