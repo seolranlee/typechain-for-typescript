@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs", // node.js를 평범하게 사용하고 다양한 걸 import하거나 export할 수 있게 해준다.
+        "target": "ES2015",
+        "sourceMap": true,
+        "outDir": "dist"
+    },
+    "include": [
+        "src/**/*"
+    ], // 컴파일 과정에 필요한 파일들을 적는다.
+    "exclude": [
+        "node_modules"
+    ] // 컴파일 과정에 필요한 파일들을 적는다.
+}

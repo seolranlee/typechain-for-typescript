@@ -1,0 +1,17 @@
+{
+  "name": "typechain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/seolranlee/typechain.git",
+  "author": "설설이 <leesugar90@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^3.9.3"
+  },
+  "scripts": {
+    "start": "tsc-watch --onSuccess \" node dist/index.js\" "
+  },
+  "devDependencies": {
+    "tsc-watch": "^4.2.8"
+  }
+}
