@@ -60,13 +60,25 @@ const createNewBlock = (data: string): Block => {
     return newBlock;
 }
 
+const getHashforBlock = (aBlock: Block): string => Block.calculateBlockHash(aBlock.index, aBlock.previousHash, aBlock.timestamp, aBlock.data);
+
 const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean => {
-    if (!Block.validateStructure(candidateBlock)) {
+    if (!Block.validateStructure(candidateBlock)) { // 구조 검증
         return false;
-    } else if (previousBlock.index + 1 !== candidateBlock.index) {
+    } else if (previousBlock.index + 1 !== candidateBlock.index) {  // 이전 블록의 인덱스 + 1 이 현재 블록 인덱스와 같은기
         return false;
-    } else if (previousBlock.hash !== candidateBlock.previousHash) {
+    } else if (previousBlock.hash !== candidateBlock.previousHash) {    // 이전 블록의 해쉬가 현재 블록이 가지고 있는 이전 블록의 해쉬 정보와 같은가
         return false;
+    } else if (getHashforBlock(candidateBlock) !== candidateBlock.hash) {   // 우리가 해쉬를 계산 했는데 다른 해쉬를 갖고 있는가
+        return false;
+    } else {
+        return true;
+    }
+}
+
+const addBlock = (candidateBlock: Block): void => {
+    if (isBlockValid(candidateBlock, getLatestBlock())) {
+        blockchain.push(candidateBlock);
     }
 }
 
