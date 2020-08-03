@@ -1,4 +1,11 @@
+// typescript
+// 예측 가능한 함수 리턴 타입
+// 예측 가능한 함수 인자 타입
+// static과 같은 것을 할 수 있고
+
+
 // 블록체인의 기반: 블록들이 자신의 전(previous) 블록으로의 링크가 있다는 것.
+
 
 import * as CryptoJS from 'crypto-js';
 
@@ -57,6 +64,7 @@ const createNewBlock = (data: string): Block => {
     const newTimestamp: number = getNewTimeStamp();
     const newHash: string = Block.calculateBlockHash(newIndex, previousBlock.hash, newTimestamp, data);
     const newBlock: Block = new Block(newIndex, newHash, previousBlock.hash, data, newTimestamp);
+    addBlock(newBlock);
     return newBlock;
 }
 
@@ -78,8 +86,13 @@ const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean => {
 
 const addBlock = (candidateBlock: Block): void => {
     if (isBlockValid(candidateBlock, getLatestBlock())) {
-        blockchain.push(candidateBlock);
+        blockchain.push(candidateBlock);    // 배열과 같은걸로 block이 아닌것을 push하지 않게 막을 수 있음.
     }
 }
 
+createNewBlock("second block");
+createNewBlock("third block");
+createNewBlock("fourth block");
+
+console.log(blockchain)
 export { };
